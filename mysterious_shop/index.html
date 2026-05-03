@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>神秘小舖 👁️ 生日限定</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <marquee scrollamount="10">歡迎來到神秘小舖！今天僅上架少數商品，只有真正的強者才能擁有！
+    </marquee>
+    <h1>神秘小舖</h1>
+    <p class="subtitle">「生日快樂。」</p>
+</header>
+...
+<!-- Modal 0: 密碼鍵盤 -->
+<div id="keypad-modal" class="modal">
+    <div class="modal-content keypad-style">
+        <h2 class="neon-text">輸入 4 位數解鎖密碼</h2>
+        <div class="keypad-display" id="keypad-display">----</div>
+        <div class="keypad-grid">
+            <button onclick="game.inputPassword(1)">1</button>
+            <button onclick="game.inputPassword(2)">2</button>
+            <button onclick="game.inputPassword(3)">3</button>
+            <button onclick="game.inputPassword(4)">4</button>
+            <button onclick="game.inputPassword(5)">5</button>
+            <button onclick="game.inputPassword(6)">6</button>
+            <button onclick="game.inputPassword(7)">7</button>
+            <button onclick="game.inputPassword(8)">8</button>
+            <button onclick="game.inputPassword(9)">9</button>
+            <button onclick="game.clearPassword()" class="clear-key">C</button>
+            <button onclick="game.inputPassword(0)">0</button>
+            <button onclick="ui.closeModal('keypad-modal')" class="clear-key">X</button>
+        </div>
+        <p class="hint" style="margin-top: 15px; color: #666;">( 提示：右下角已經看得很清楚了 )</p>
+    </div>
+</div>
+
+<!-- Modal 1: 驗證 -->
+
+    <main class="shop-grid">
+        <!-- 商品一 -->
+        <div class="product-card" id="product-1">
+            <div class="img-container">
+                <!-- 已替換：迷幻隱眼圖 -->
+                <img src="gift1.png" alt="極光灰隱眼">
+            </div>
+            <div class="product-info">
+                <h3>極光灰隱形眼鏡</h3>
+                <p>只有陷阱妹才配擁有(需要驗證)。</p>
+                <div class="price">$ 250</div>
+                <button onclick="ui.openModal('verify-modal')">身分驗證購買</button>
+            </div>
+        </div>
+
+        <!-- 商品二 -->
+        <div class="product-card" id="product-2">
+            <div class="img-container">
+                <!-- 已替換：神秘古書圖 -->
+                <img src="gift2.png" alt="黑歷史本本">
+            </div>
+            <div class="product-info">
+                <h3>黑歷史相簿</h3>
+                <p>精彩回憶</p>
+                <div class="price">$ ？？？？？</div>
+                <button onclick="game.askPassword()">密碼解鎖</button>
+            </div>
+        </div>
+
+        <!-- 商品三 -->
+        <div class="product-card" id="product-3">
+            <div class="img-container">
+                <!-- 已替換：發光寶箱圖 -->
+                <img src="gift3.png" alt="神秘禮物">
+            </div>
+            <div class="product-info">
+                <h3>神秘禮物</h3>
+                <p>本店非賣品。僅限持有特殊物品者兌換。</p>
+                <div class="price">$ FREE</div>
+                <button onclick="game.redeemGift()">領取驚喜</button>
+            </div>
+        </div>
+        </main>
+
+        <!-- 運勢抽籤系統 -->
+        <section class="fortune-section">
+        <div class="fortune-container">
+            <h2 class="neon-text">今日運勢抽籤</h2>
+            <div id="fortune-box" class="fortune-box" onclick="game.drawFortune()">
+                <div class="stick-container">
+                    <span class="stick"></span>
+                    <span class="stick"></span>
+                    <span class="stick"></span>
+                </div>
+                <p class="draw-hint">點擊筒子搖出好運</p>
+            </div>
+            <div id="fortune-result" class="fortune-result" style="display: none;">
+                <img id="fortune-img" src="" alt="運勢圖">
+                <p id="fortune-desc" class="fortune-desc"></p>
+                <button onclick="ui.resetFortune()" class="mini-btn">重新抽籤</button>
+            </div>
+        </div>
+        </section>
+
+
+    <!-- 模糊密碼區 (手機上也會顯示) -->
+    <div id="blurry-zone">
+        <p>【密碼】</p>
+        <span class="code">6767</span>
+    </div>
+
+    <!-- Modal 1: 驗證 -->
+    <div id="verify-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="ui.closeModal('verify-modal')">&times;</span>
+            <h2>誰是真正的陷阱妹？</h2>
+            <div class="verify-grid">
+                <!-- 【替換點：src 換成你的照片檔名】 -->
+                <img src="wrong.png" onclick="game.verifyTrap(false)">
+                <img src="correct.jpg" onclick="game.verifyTrap(true)">
+                <img src="wrong2.jpg" onclick="game.verifyTrap(false)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: 相簿 -->
+    <div id="album-modal" class="modal">
+        <div class="modal-content album-style">
+            <span class="close-btn" onclick="ui.closeModal('album-modal')">&times;</span>
+            <h2 class="neon-text">！！！黑歷史解鎖！！！</h2>
+            <div class="album-grid">
+                <!-- 【替換點：src 換成你的照片檔名】 -->
+                <img src="real1.jpg">
+                <img src="real2.jpg">
+                <img src="real3.jpg">
+                <div class="sock-collect" onclick="game.collectSock()">
+                    <img src="socks.jpg" alt="白襪">
+                    <p class="hint">點我拾取</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最終頁面 -->
+    <div id="final-surprise">
+        <div class="surprise-container">
+            <h1 class="sparkle-text">HAPPY BIRTHDAY!</h1>
+            <div class="reward-box">
+                <h2 style="font-size: 1.2rem;">憑此截圖向 Jason 領取實體白襪一雙！</h2>
+                <div class="memory-photos">
+                    <!-- 【替換點：src 換成感人照片】 -->
+                    <img src="hbd1.jpg" class="heart-border">
+                    <img src="hbd2.jpg" class="heart-border">
+                </div>
+                <div class="blessing-text">
+                    <p>
+                        To鄭筱融：<br>
+                        祝你生日快樂，雖然我不擅於表達，但鱔魚意麵。<br>
+                        這個網站應該能保留下來(我不太確定)，完全是一個特別的禮物。<br>
+                        希望你會喜歡這個怪網站，最後還有一些在這個網站中的白癡事件的紀錄，當作彩蛋。
+                    </p>
+                </div>
+                <button onclick="location.reload()" class="retro-btn">重新逛店</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

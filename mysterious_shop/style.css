@@ -1,0 +1,336 @@
+/* 神秘小舖核心樣式 - RWD 優化版 */
+:root {
+    --bg-deep: #0d0221;
+    --bg-card: #1a0b2e;
+    --neon-green: #00ff41;
+    --neon-pink: #ff00ff;
+    --neon-cyan: #00f3ff;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-deep);
+    color: #ccc;
+    font-family: "Microsoft JhengHei", "Courier New", monospace;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 20px 10px;
+    border-bottom: 2px solid var(--neon-pink);
+    background: #000;
+}
+
+/* 動畫效果 */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
+    25% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); }
+    50% { text-shadow: 2px -2px var(--neon-pink), -2px 2px var(--neon-cyan); }
+    75% { text-shadow: -2px 2px var(--neon-pink), -2px -2px var(--neon-cyan); }
+    100% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 5px var(--neon-green); transform: scale(1); }
+    50% { box-shadow: 0 0 25px var(--neon-green), 0 0 40px var(--neon-green); transform: scale(1.05); }
+    100% { box-shadow: 0 0 5px var(--neon-green); transform: scale(1); }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+    margin: 10px 0;
+    animation: glitch 1s infinite;
+}
+
+.subtitle { font-size: 0.9rem; color: var(--neon-cyan); }
+
+/* 商品網格 - 手機友善 */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: var(--bg-card);
+    border: 1px solid #444;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floating 4s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.product-card:nth-child(2) { animation-delay: 0.5s; }
+.product-card:nth-child(3) { animation-delay: 1s; }
+
+.img-container img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.price {
+    font-size: 1.3rem;
+    color: var(--neon-green);
+    margin: 10px 0;
+}
+
+button {
+    background: transparent;
+    border: 2px solid var(--neon-pink);
+    color: var(--neon-pink);
+    padding: 12px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    outline: none;
+}
+
+/* 模糊區塊 */
+#blurry-zone {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid var(--neon-cyan);
+    padding: 8px;
+    filter: blur(8px);
+    z-index: 100;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+}
+#blurry-zone.clear { filter: blur(0); border-width: 2px; }
+
+/* 彈窗設計 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.modal-content {
+    background: #111;
+    border: 2px solid var(--neon-cyan);
+    padding: 20px;
+    width: 95%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.verify-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.verify-grid img { 
+    width: 100%; 
+    aspect-ratio: 1/1; 
+    object-fit: cover; 
+    border-radius: 5px; 
+    cursor: pointer;
+}
+
+.album-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px;
+}
+
+.album-grid img { 
+    width: 100%; 
+    border: 2px solid #fff; 
+}
+
+/* 最終驚喜頁面 */
+#final-surprise {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #fff;
+    z-index: 5000;
+    overflow-y: auto;
+    padding: 20px 10px;
+}
+
+.surprise-container {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.memory-photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.heart-border { width: 45%; min-width: 140px; border: 3px solid pink; border-radius: 10px; }
+
+.blessing-text {
+    font-size: 1rem;
+    text-align: left;
+    background: #fff0f5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* 襪子領取樣式 */
+.sock-collect {
+    background: linear-gradient(45deg, #000, #1a1a1a);
+    border: 3px dashed var(--neon-green);
+    padding: 20px;
+    cursor: pointer;
+    animation: pulse-glow 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    margin: 10px 0;
+}
+
+.sock-collect img { width: 120px !important; border: none !important; }
+.sock-collect .hint { color: var(--neon-green); font-weight: bold; font-size: 1.2rem; }
+
+/* 運勢抽籤 */
+.fortune-section {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(26, 11, 46, 0.8);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.fortune-box {
+    width: 100px; height: 150px;
+    background: #4a1a1a;
+    margin: 20px auto;
+    border-radius: 10px 10px 40px 40px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #2a0a0a;
+}
+
+.shaking { animation: shake 0.15s infinite; }
+
+.fortune-result {
+    margin-top: 20px;
+}
+
+.fortune-result img {
+    max-width: 100%;
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--neon-cyan);
+    margin-bottom: 15px;
+}
+
+.fortune-desc {
+    font-weight: bold;
+    color: #fff;
+    white-space: pre-line;
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+.mini-btn {
+    width: auto !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 密碼鍵盤 */
+.keypad-style { max-width: 300px !important; }
+.keypad-display {
+    background: #222;
+    color: var(--neon-green);
+    font-size: 2rem;
+    padding: 10px;
+    margin-bottom: 15px;
+    letter-spacing: 5px;
+}
+.keypad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.keypad-grid button { height: 50px; font-size: 1.2rem; }
+
+/* 響應式調整 (平板以上) */
+@media (min-width: 768px) {
+    h1 { font-size: 3rem; }
+    .shop-grid { grid-template-columns: repeat(3, 1fr); }
+    .album-grid { grid-template-columns: repeat(3, 1fr); }
+    .keypad-style { max-width: 320px !important; }
+}
+
+/* 特殊效果 */
+body.great-bad-effect::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 9999;
+    animation: shake 0.2s infinite;
+}
